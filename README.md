@@ -3,7 +3,19 @@
 End to end project from data collection to putting models into production.
 
 
-# 1. Minimum Viable Product
+# 1. Minimum Viable Product Structure
+
+C:.
+
+└───deployment
+
+    └───data
+    
+    └───model.py
+                Model building file that is responsible for creating a model, including:
+                    - feature engineering
+                    - all data preprocessing
+                    - model training
 
 Deploy a model that predict sales of houses.
 
