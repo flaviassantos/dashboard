@@ -10,7 +10,11 @@ C:.
 └───deployment
 
     └───data
-    
+    └───templates
+        └───index.html
+               Front-end web app. Any request that is given to the ML model will be in 
+               the form of API (hosted through flask). It allows user to enter house 
+               detail and displays the predicted value in the market.            
     └───model.py
                 Model building file that is responsible for creating a model, including:
                     - feature engineering
