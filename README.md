@@ -7,7 +7,7 @@ End to end project from data collection to putting models into production.
 
 C:.
 
-└───deployment
+└───machinelearning
 
     └───data
     └───templates
