@@ -1,15 +1,15 @@
     <table class="table table-hover">
         <tr>
             <td width="70px">
-                <a href="{{ url_for('user', username=project.author.username) }}">
+                <a href="{{ url_for('main.user', username=project.author.username) }}">
                     <img src="{{ project.author.avatar(70) }}" />
                 </a>
             </td>
             <td>
-                <a href="{{ url_for('user', username=project.author.username) }}">
+                <a href="{{ url_for('main.user', username=project.author.username) }}">
                     {{ project.author.username }}
                 </a>
-                Working on:
+                working on {{ moment(project.timestamp).fromNow() }}:
                 <br>
                 {{ project.body }}
             </td>
