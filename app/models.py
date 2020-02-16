@@ -1,8 +1,8 @@
 from datetime import datetime
+from hashlib import md5
 from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from hashlib import md5
 
 
 class User(UserMixin, db.Model):
@@ -25,21 +25,12 @@ class User(UserMixin, db.Model):
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
 
 
 @login.user_loader
 def load_user(id):
-    """
-    Because Flask-Login knows nothing about databases, it needs the application’s help in loading
-    a user. For that reason, the extension expects that the application will configure a user loader
-    function, that can be called to load a user given the ID.
-
-    Parameters
-    ----------
-    _id (str) : id that Flask-Login passes to the function as an argument
-
-    """
     return User.query.get(int(id))
 
 

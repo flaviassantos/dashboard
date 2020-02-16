@@ -1,4 +1,4 @@
-#!C:\Users\ssant\drive\github\machinelearning\venv_ml\Scripts\python.exe
+#!C:\Users\ssant\drive\github\dashboard\venv_dashboard\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'alembic==1.4.0','console_scripts','alembic'
 __requires__ = 'alembic==1.4.0'
 import re

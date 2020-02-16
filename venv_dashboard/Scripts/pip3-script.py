@@ -1,4 +1,4 @@
-#!C:\Users\ssant\drive\github\machinelearning\venv_ml\Scripts\python.exe
+#!C:\Users\ssant\drive\github\dashboard\venv_dashboard\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip3'
 __requires__ = 'pip==19.0.3'
 import re

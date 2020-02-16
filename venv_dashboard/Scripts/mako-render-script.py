@@ -1,4 +1,4 @@
-#!C:\Users\ssant\drive\github\machinelearning\venv_ml\Scripts\python.exe
+#!C:\Users\ssant\drive\github\dashboard\venv_dashboard\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'Mako==1.1.1','console_scripts','mako-render'
 __requires__ = 'Mako==1.1.1'
 import re
