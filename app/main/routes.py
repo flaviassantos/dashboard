@@ -2,7 +2,6 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
     jsonify, current_app
 from flask_login import current_user, login_required
-from flask_babel import _, get_locale
 from guess_language import guess_language
 from app import db
 from app.main.forms import EditProfileForm, ProjectForm, SearchForm
@@ -17,7 +16,6 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
         g.search_form = SearchForm()
-    g.locale = str(get_locale())
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -26,14 +24,10 @@ def before_request():
 def index():
     form = ProjectForm()
     if form.validate_on_submit():
-        language = guess_language(form.project.data)
-        if language == 'UNKNOWN' or len(language) > 5:
-            language = ''
-        project = Project(body=form.project.data, author=current_user,
-                    language=language)
+        project = Project(body=form.project.data, author=current_user) # fss
         db.session.add(project)
         db.session.commit()
-        flash(_('Your project is now live!'))
+        flash('Your project is now live!')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     projects = current_user.followed_projects().paginate(
@@ -42,7 +36,7 @@ def index():
         if projects.has_next else None
     prev_url = url_for('main.index', page=projects.prev_num) \
         if projects.has_prev else None
-    return render_template('index.html', title=_('Home'), form=form,
+    return render_template('index.html', title='Home', form=form,
                            projects=projects.items, next_url=next_url,
                            prev_url=prev_url)
 
@@ -57,7 +51,7 @@ def explore():
         if projects.has_next else None
     prev_url = url_for('main.explore', page=projects.prev_num) \
         if projects.has_prev else None
-    return render_template('index.html', title=_('Explore'),
+    return render_template('index.html', title='Explore',
                            projects=projects.items, next_url=next_url,
                            prev_url=prev_url)
 
@@ -85,12 +79,12 @@ def edit_profile():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
         db.session.commit()
-        flash(_('Your changes have been saved.'))
+        flash('Your changes have been saved.')
         return redirect(url_for('main.edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', title=_('Edit Profile'),
+    return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
 
 
@@ -99,14 +93,14 @@ def edit_profile():
 def follow(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
-        flash(_('User %(username)s not found.', username=username))
+        flash(f'User {username} not found.')
         return redirect(url_for('main.index'))
     if user == current_user:
-        flash(_('You cannot follow yourself!'))
-        return redirect(url_for('main.user', username=username))
+        flash('You cannot follow yourself!')
+        return redirect(url_for('main.user'))
     current_user.follow(user)
     db.session.commit()
-    flash(_('You are following %(username)s!', username=username))
+    flash(f'You are following {username}!')
     return redirect(url_for('main.user', username=username))
 
 
@@ -115,23 +109,15 @@ def follow(username):
 def unfollow(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
-        flash(_('User %(username)s not found.', username=username))
+        flash(f'User {username} is not found.')
         return redirect(url_for('main.index'))
     if user == current_user:
-        flash(_('You cannot unfollow yourself!'))
+        flash('You cannot unfollow yourself!')
         return redirect(url_for('main.user', username=username))
     current_user.unfollow(user)
     db.session.commit()
-    flash(_('You are not following %(username)s.', username=username))
+    flash('You are not following %(username)s.')
     return redirect(url_for('main.user', username=username))
-
-
-@bp.route('/translate', methods=['POST'])
-@login_required
-def translate_text():
-    return jsonify({'text': translate(request.form['text'],
-                                      request.form['source_language'],
-                                      request.form['dest_language'])})
 
 
 @bp.route('/search')
@@ -146,5 +132,5 @@ def search():
         if total > page * current_app.config['POSTS_PER_PAGE'] else None
     prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1) \
         if page > 1 else None
-    return render_template('search.html', title=_('Search'), projects=projects,
+    return render_template('search.html', title='Search', projects=projects,
                            next_url=next_url, prev_url=prev_url)
