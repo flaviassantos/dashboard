@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 from sklearn.linear_model import LinearRegression
 import pickle
-from machinelearning.data_cleaning import convert_word_to_int
+from app.machinelearning.data_cleaning import convert_word_to_int
 
 PATH = Path(Path.cwd())
 DATA = Path(PATH, 'machinelearning', 'data', 'raw', 'tree_months_sales.csv')
