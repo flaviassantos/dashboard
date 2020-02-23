@@ -1,27 +1,33 @@
 {% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %} Dashboard {% endblock title %}
 
 {% block app_content %}
-    <h1>Hi, {{ current_user.username }}</h1>
-    {% if form %}
-    {{ wtf.quick_form(form) }}
-    <br>
-    {% endif %}
-    {% for project in projects %}
-        {% include '_project.html' %}
-    {% endfor %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span>Newer projects
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    Older projects<span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+
+    <h2>Machine Learning Deployment</h2>
+    <div class="login">
+
+         <form action="{{ url_for('main.predict') }}" method="post">
+             <input type="text" name="experience" placeholder="Experience" required="required" />
+             <br>
+             <input type="text" name="test_score" placeholder="Test Score" required="required" />
+             <br>
+             <input type="text" name="interview_score" placeholder="Interview Score" required="required" />
+             <br>
+             <br>
+
+             <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+
+         </form>
+         <br>
+         <br>
+         {{ prediction_text }}
+
+          <br>
+          <br>
+
+    </div>
+
+    {% include "top-stats.html" %}
+
 {% endblock %}

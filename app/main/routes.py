@@ -1,10 +1,14 @@
+import pickle
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, current_app
 from flask_login import current_user, login_required
 from app import db
-from app.main.forms import EditProfileForm, ProjectForm, SearchForm
+from app.main.forms import EditProfileForm, SearchForm
+from app.main.ml_model import run_model
 from app.models import User, Project
 from app.main import bp
+import numpy as np
+import os
 
 
 @bp.before_app_request
@@ -17,29 +21,33 @@ def before_request():
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def index():
-    form = ProjectForm()
-    if form.validate_on_submit():
-        project = Project(body=form.project.data, author=current_user) # fss
-        db.session.add(project)
-        db.session.commit()
-        flash('Your project is now live!')
-        return redirect(url_for('main.index'))
-    page = request.args.get('page', 1, type=int)
-    projects = current_user.followed_projects().paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.index', page=projects.next_num) \
-        if projects.has_next else None
-    prev_url = url_for('main.index', page=projects.prev_num) \
-        if projects.has_prev else None
-    return render_template('index.html', title='Home', form=form,
-                           projects=projects.items, next_url=next_url,
-                           prev_url=prev_url)
+    return render_template('index.html')
+
+
+@bp.route('/predict', methods=['POST', 'GET'])
+def predict():
+    '''
+    For rendering ML results on HTML GUI.
+    '''
+
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    model_path = (os.path.join(basedir, 'model.pkl'))
+
+    model = pickle.load(open(model_path, 'rb'))
+
+    int_features = [int(x) for x in request.form.values()]
+    final_features = [np.array(int_features)]
+    prediction = model.predict(final_features)
+
+    output = round(prediction[0], 2)
+
+    return render_template('index.html', title='Prediction', prediction_text=f'Employee Salary should be $ {output}')
 
 
 @bp.route('/explore')
-@login_required
+@login_required  # Fss change later to required
 def explore():
     page = request.args.get('page', 1, type=int)
     projects = Project.query.order_by(Project.timestamp.desc()).paginate(

@@ -1,6 +1,6 @@
 from flask import request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, Length
 from app.models import User
 
@@ -23,8 +23,8 @@ class EditProfileForm(FlaskForm):
 
 
 class ProjectForm(FlaskForm):
-    project = TextAreaField('Say something', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    project = TextAreaField('Description')
+    submit = SubmitField('Predict')
 
 
 class SearchForm(FlaskForm):

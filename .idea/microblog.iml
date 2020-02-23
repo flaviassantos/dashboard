@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv_dashboard" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (dashboard) (2)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (dashboard)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="flask-boilerplate-dashboard-argon" />
   </component>
