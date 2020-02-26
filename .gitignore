@@ -127,4 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-venv_dashboard/
+app.db
+dashboard.log*
+venv_dashboard
