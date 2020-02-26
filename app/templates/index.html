@@ -4,19 +4,19 @@
 
 {% block app_content %}
 
-    <h2>Machine Learning Deployment</h2>
+    <h2>Machine Learning Deployment - House Sales Forecasting</h2>
     <div class="login">
 
          <form action="{{ url_for('main.predict') }}" method="post">
-             <input type="text" name="experience" placeholder="Experience" required="required" />
+             <input type="text" name="rate" placeholder="Rate" required="required" />
              <br>
-             <input type="text" name="test_score" placeholder="Test Score" required="required" />
+             <input type="text" name="sales_in_first_month" placeholder="Sales in first month" required="required" />
              <br>
-             <input type="text" name="interview_score" placeholder="Interview Score" required="required" />
+             <input type="text" name="sales_in_second_month" placeholder="Sales in second month" required="required" />
              <br>
              <br>
 
-             <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+             <button type="submit" class="btn btn-primary btn-block btn-large">Predict sales in third month</button>
 
          </form>
          <br>

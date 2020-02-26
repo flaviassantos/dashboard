@@ -43,7 +43,7 @@ def predict():
 
     output = round(prediction[0], 2)
 
-    return render_template('index.html', title='Prediction', prediction_text=f'Employee Salary should be $ {output}')
+    return render_template('index.html', title='Prediction', prediction_text=f'Value should be $ {output}')
 
 
 @bp.route('/explore')
