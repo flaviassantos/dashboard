@@ -1,21 +1,21 @@
 # Welcome to Dashboard!
 
-# A end to end project from data collection to putting a model into production.
+A end to end project from data collection to putting a model into production.
 
- 1. Minimum Viable Product: 
- 
- - Deployment of Linear Regression to Predict House Sales
+## How to install
 
- 2. TODO: CI/CD
- 
- 3. TODO: Elaborated dashboard with interesting visualizations
+$ docker pull flaviassantos/dashboard:latest
 
-## Environment and tools
-1. scikit-learn
+The documentation is available on [Docker hub](https://hub.docker.com/repository/docker/flaviassantos/dashboard).
+
+### Environment and tools
+
+1. python 3.7
 2. pandas
 3. numpy
 4. flask
 5. docker
+6. scikit-learn
 
 
 ```
