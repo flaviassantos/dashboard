@@ -1,6 +1,6 @@
 # Welcome to Dashboard!
 
-A end to end project from data collection to putting a model into production.
+A end to end project from data collection to putting a machine learning model into production.
 
 ## How to install
 
