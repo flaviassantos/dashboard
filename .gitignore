@@ -129,4 +129,8 @@ dmypy.json
 .pyre/
 app.db
 dashboard.log*
-venv_dashboard
+Important_Commands.txt
+.idea/
+.idea/misc.xml
+
+
