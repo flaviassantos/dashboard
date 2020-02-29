@@ -21,13 +21,18 @@
          </form>
          <br>
          <br>
+        <div>
          {{ prediction_text }}
-
+        </div>
           <br>
           <br>
-
     </div>
 
+    <div>
+        {% include "site_template/footer.html" %}
+    </div>      
+
     {% include "top-stats.html" %}
+
 
 {% endblock %}
