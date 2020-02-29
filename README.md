@@ -2,6 +2,8 @@
 
 A end to end project from data collection to putting a machine learning model into production.
 
+The application is available at [flavia-dashboard-ml.herokuapp.com]( https://flavia-dashboard-ml.herokuapp.com/ ).
+
 ## How to install
 
 If you have docker installed, you can test the code locally with:
