@@ -1,0 +1,21 @@
+{
+  "name": "Machine Learning Dashboard",
+  "description": "This project automate a machine learning pipeline using open source tools, focusing on CI/CD best practices.",
+  "keywords": [
+    "Machine Learning",
+    "Cloud Deployment",
+    "Open Source",
+    "DevOps",
+    "Clean Code",
+    "Data Science"
+  ],
+  "website": "https://flavia-dashboard-ml.herokuapp.com/",
+  "repository": "https://github.com/flaviassantos/dashboard",
+  "success_url": "/index",
+  "scripts": {  },
+  "env": {  },
+  "formation": {  },
+  "addons": [  ],
+  "buildpacks": [  ],
+  "environments": {  }
+}
