@@ -3,35 +3,8 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block app_content %}
-
-    <h2>Machine Learning Deployment - House Sales Forecasting</h2>
-    <div class="login">
-
-         <form action="{{ url_for('main.predict') }}" method="post">
-             <input type="text" name="rate" placeholder="Rate" required="required" />
-             <br>
-             <br>
-             <input type="text" name="sales_in_first_month" placeholder="Sales in first month" required="required" />
-             <br>
-             <br>
-             <input type="text" name="sales_in_second_month" placeholder="Sales in second month" required="required" />
-             <br>
-             <br>
-
-             <button type="submit" class="btn btn-primary btn-block btn-large">Predict sales in third month</button>
-
-         </form>
-         <br>
-         <br>
-        <div>
-            <span class="h3 font-weight-bold mb-0">{{ prediction_text }}</span>
-
-        </div>
-          <br>
-          <br>
-        </div>
-           {% include "top-stats.html" %}
-        <br>
-    </div>      
-
+    {# include graphs here #}
+    <hr>
+    {% include "top-stats.html" %}
+    <hr>
 {% endblock %}
