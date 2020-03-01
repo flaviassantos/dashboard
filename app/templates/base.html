@@ -52,10 +52,21 @@
         {# application content needs to be provided in the app_content block #}
         {% block app_content %}{% endblock %}
     </div>
+    <br>
+    <br>
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+            {% include "footer.html" %}
+        </div>
+    </nav>
+
 {% endblock %}
+
 
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
     {{ moment.lang(g.locale) }}
 {% endblock %}
+
