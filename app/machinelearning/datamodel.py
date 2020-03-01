@@ -24,12 +24,12 @@ class datamodel():
                 'v': Any(Coerce(float), Coerce(int))},
             'sqft_living': {
                 'desc': 'Square footage of the apartments interior living space',
-                'default': 2000,
+                'default': 800,
                 'seq': 3,
                 'v': Coerce(int)},
             'sqft_lot': {
                 'desc': 'Square footage of the land space',
-                'default': 20000,
+                'default': 1000,
                 'seq': 4,
                 'v': Coerce(int)},
             'floors': {
@@ -59,7 +59,7 @@ class datamodel():
                 'v': Coerce(int)},
             'sqft_above': {
                 'desc': 'The square footage of the interior housing space that is above ground level',
-                'default': 2000,
+                'default': 870,
                 'seq': 10,
                 'v': Coerce(int)},
             'sqft_basement': {
@@ -94,12 +94,12 @@ class datamodel():
                 'v': Coerce(float)},
             'sqft_living15': {
                 'desc': 'The square footage of interior housing living space for the nearest 15 neighbors',
-                'default': 2000,
+                'default': 870,
                 'seq': 17,
                 'v': Coerce(int)},
             'sqft_lot15': {
                 'desc': 'The square footage of the land lots of the nearest 15 neighbors',
-                'default': 20000,
+                'default': 870,
                 'seq': 18,
                 'v': Coerce(int)},
             'year': {
@@ -111,7 +111,6 @@ class datamodel():
 
     def schema(self):
         """ Generate a voluptous schema definition """
-
         defs = {}
         for key, val in self.metadata.items():
             defs[Required(key, default=val['default'])] = val['v']
@@ -120,16 +119,13 @@ class datamodel():
 
     def headers(self):
         """ Generate array for passing correct parameter sequence to pandas """
-
         return sorted(self.metadata, key=self.metadata.get('seq'))
 
     def description(self):
         """ Generate structure usable for template engine """
-
         desc = {}
         for key, val in self.metadata.items():
             desc[key] = [val['desc'], val['default']]
-
         return desc
 
     def get_models(self):
@@ -138,5 +134,4 @@ class datamodel():
 
     def load_model(self, name):
         """ Load the datamodel that we trained and saved in the Jupyter notebook """
-
         return load(Path('app', 'machinelearning', 'models', '{}.joblib'.format(name)))
