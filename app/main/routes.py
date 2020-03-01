@@ -25,28 +25,8 @@ def index():
     return render_template('index.html')
 
 
-@bp.route('/predict', methods=['POST', 'GET'])
-def predict():
-    '''
-    For rendering ML results on HTML GUI.
-    '''
-
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    model_path = (os.path.join(basedir, 'model.pkl'))
-
-    model = pickle.load(open(model_path, 'rb'))
-
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
-
-    output = round(prediction[0], 2)
-
-    return render_template('index.html', title='Prediction', prediction_text=f'Value should be $ {output}')
-
-
 @bp.route('/explore')
-@login_required  # Fss change later to required
+@login_required
 def explore():
     page = request.args.get('page', 1, type=int)
     projects = Project.query.order_by(Project.timestamp.desc()).paginate(

@@ -1,14 +1,27 @@
-# @bp.route('/predict', methods=['POST', 'GET'])
-# def predict():
-#     '''
-#     For rendering ML results on HTML GUI.
-#     '''
-#     model = run_model()  # pickle.load(open('model.pkl', 'rb'))
-#
-#     int_features = [int(x) for x in request.form.values()]
-#     final_features = [np.array(int_features)]
-#     prediction = model.predict(final_features)
-#
-#     output = round(prediction[0], 2)
-#
-#     return render_template('index.html', title='Prediction', prediction_text=f'Employee Salary should be $ {output}')
+from flask import render_template, jsonify
+from app.machinelearning import bp
+from app.machinelearning.datamodel import datamodel
+from app.machinelearning.predict import predict
+
+
+@bp.route('/machine_learning_prediction')
+def prediction():
+    dm = datamodel()
+    return render_template('machinelearning/predict.html',
+                           options=dm.description(),
+                           models=dm.get_models())
+
+
+@bp.route('/script.js', methods=['GET'])
+def serve_script():
+    return bp.send_static_file('script.js')
+
+
+@bp.route('/predict', methods=['GET', 'POST'])
+def query_predict_default():
+    return jsonify(predict('grad_boosting_regressor'))
+
+
+@bp.route('/predict/<string:model_name>', methods=['GET', 'POST'])
+def query_predict(model_name):
+    return jsonify(predict(model_name))
