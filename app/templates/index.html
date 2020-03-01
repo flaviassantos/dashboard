@@ -10,7 +10,9 @@
          <form action="{{ url_for('main.predict') }}" method="post">
              <input type="text" name="rate" placeholder="Rate" required="required" />
              <br>
+             <br>
              <input type="text" name="sales_in_first_month" placeholder="Sales in first month" required="required" />
+             <br>
              <br>
              <input type="text" name="sales_in_second_month" placeholder="Sales in second month" required="required" />
              <br>
@@ -22,17 +24,14 @@
          <br>
          <br>
         <div>
-         {{ prediction_text }}
+            <span class="h3 font-weight-bold mb-0">{{ prediction_text }}</span>
+
         </div>
           <br>
           <br>
-    </div>
-
-    <div>
-        {% include "footer.html" %}
+        </div>
+           {% include "top-stats.html" %}
+        <br>
     </div>      
-
-    {% include "top-stats.html" %}
-
 
 {% endblock %}
