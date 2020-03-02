@@ -1,17 +1,13 @@
-    <table class="table table-hover">
-        <tr>
-            <td width="70px">
-                <a href="{{ url_for('main.user', username=project.author.username) }}">
-                    <img src="{{ project.author.avatar(70) }}" />
-                </a>
-            </td>
-            <td>
-                <a href="{{ url_for('main.user', username=project.author.username) }}">
-                    {{ project.author.username }}
-                </a>
-                working on {{ moment(project.timestamp).fromNow() }}:
-                <br>
-                {{ project.body }}
-            </td>
-        </tr>
-    </table>
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Insert a new project</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <br>
+    <p>Delete a project?<a href="{{ url_for('main.delete_project') }}"></a></p>
+{% endblock %}
