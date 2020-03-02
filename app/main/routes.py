@@ -1,4 +1,3 @@
-import pickle
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, current_app
 from flask_login import current_user, login_required
@@ -6,8 +5,6 @@ from app import db
 from app.main.forms import EditProfileForm, SearchForm, ProjectForm
 from app.models import User, Project
 from app.main import bp
-import numpy as np
-import os
 
 
 @bp.before_app_request
@@ -20,10 +17,8 @@ def before_request():
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def index():
-    #if current_user.is_authenticated:
-    #    return redirect(url_for('main.index'))
     form = ProjectForm()
     if form.validate_on_submit():
         project = Project(date=form.date.data,
@@ -33,11 +28,25 @@ def index():
                           platform=form.platform.data,
                           income=form.income.data,
                           cost=form.cost.data,
-                          comment=form.comment.data)
+                          comment=form.comment.data,
+                          worker=current_user)
         db.session.add(project)
         db.session.commit()
         flash('Congratulations, you registered a new project!')
-    return render_template('index.html', title='New Project', form=form)
+        return redirect(url_for('main.index'))
+
+    page = request.args.get('page', 1, type=int)
+    projects = current_user.followed_projects().paginate(
+        page, current_app.config['PROJECTS_PER_PAGE'], False)
+    next_url = url_for('main.index', page=projects.next_num) \
+        if projects.has_next else None
+    prev_url = url_for('main.index', page=projects.prev_num) \
+        if projects.has_prev else None
+    return render_template('index.html', title='New Project',
+                           form=form,
+                           posts=projects.items, next_url=next_url,
+                           prev_url=prev_url)
+
 
 
 @bp.route('/user/<username>')
@@ -46,7 +55,7 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     projects = user.projects.order_by(Project.timestamp.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        page, current_app.config['PROJECTS_PER_PAGE'], False)
     next_url = url_for('main.user', username=user.username,
                        page=projects.next_num) if projects.has_next else None
     prev_url = url_for('main.user', username=user.username,
@@ -111,9 +120,9 @@ def search():
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     projects, total = Project.search(g.search_form.q.data, page,
-                               current_app.config['POSTS_PER_PAGE'])
+                               current_app.config['PROJECTS_PER_PAGE'])
     next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1) \
-        if total > page * current_app.config['POSTS_PER_PAGE'] else None
+        if total > page * current_app.config['PROJECTS_PER_PAGE'] else None
     prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1) \
         if page > 1 else None
     return render_template('search.html', title='Search', projects=projects,
