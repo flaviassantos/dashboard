@@ -7,7 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install gunicorn pymysql
 
 COPY app app
-COPY data data
 COPY migrations migrations
 COPY dashboard.py config.py boot.sh ./
 RUN chmod a+x boot.sh
