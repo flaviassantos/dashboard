@@ -17,6 +17,6 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['flavia.souza.santos.dev@gmail.com']
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
-    POSTS_PER_PAGE = 25
+    PROJ_PER_PAGE = 25
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 

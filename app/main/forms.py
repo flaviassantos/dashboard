@@ -1,6 +1,6 @@
 from flask import request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, IntegerField
+from wtforms import StringField, SubmitField, TextAreaField, IntegerField, FloatField, DateField
 from wtforms.validators import ValidationError, DataRequired, Length
 from app.models import User
 
@@ -23,8 +23,17 @@ class EditProfileForm(FlaskForm):
 
 
 class ProjectForm(FlaskForm):
-    project = TextAreaField('Description')
-    submit = SubmitField('Predict')
+    submit = SubmitField('Save Project')
+    date = DateField('Date when work was completed (format: YYYY/MM/DD)', format='%Y/%m/%d', validators=[DataRequired()])
+    client = StringField('Client', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    location = StringField('Location', validators=[DataRequired()])
+    platform = StringField('Choose platform from: SJ, Lua, Private or Other', validators=[DataRequired()])
+    income = FloatField('Income (Kr-)', validators=[DataRequired()])
+    cost = FloatField('Cost (Kr-)', validators=[DataRequired()])
+    comment = TextAreaField('Comment',
+                            validators=[Length(min=0, max=140)])
+    submit = SubmitField('Save Project')
 
 
 class SearchForm(FlaskForm):

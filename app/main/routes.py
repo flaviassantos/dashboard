@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, current_app
 from flask_login import current_user, login_required
 from app import db
-from app.main.forms import EditProfileForm, SearchForm
+from app.main.forms import EditProfileForm, SearchForm, ProjectForm
 from app.models import User, Project
 from app.main import bp
 import numpy as np
@@ -20,24 +20,24 @@ def before_request():
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
-# @login_required
+#@login_required
 def index():
-    return render_template('index.html')
-
-
-@bp.route('/explore')
-@login_required
-def explore():
-    page = request.args.get('page', 1, type=int)
-    projects = Project.query.order_by(Project.timestamp.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.explore', page=projects.next_num) \
-        if projects.has_next else None
-    prev_url = url_for('main.explore', page=projects.prev_num) \
-        if projects.has_prev else None
-    return render_template('index.html', title='Explore',
-                           projects=projects.items, next_url=next_url,
-                           prev_url=prev_url)
+    #if current_user.is_authenticated:
+    #    return redirect(url_for('main.index'))
+    form = ProjectForm()
+    if form.validate_on_submit():
+        project = Project(date=form.date.data,
+                          client=form.client.data,
+                          city=form.city.data,
+                          location=form.location.data,
+                          platform=form.platform.data,
+                          income=form.income.data,
+                          cost=form.cost.data,
+                          comment=form.comment.data)
+        db.session.add(project)
+        db.session.commit()
+        flash('Congratulations, you registered a new project!')
+    return render_template('index.html', title='New Project', form=form)
 
 
 @bp.route('/user/<username>')
@@ -108,7 +108,7 @@ def unfollow(username):
 @login_required
 def search():
     if not g.search_form.validate():
-        return redirect(url_for('main.explore'))
+        return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
     projects, total = Project.search(g.search_form.q.data, page,
                                current_app.config['POSTS_PER_PAGE'])

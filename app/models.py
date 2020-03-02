@@ -64,7 +64,6 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    projects = db.relationship('Project', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     followed = db.relationship(
@@ -127,23 +126,18 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-class Project(SearchableMixin, db.Model):
-    __searchable__ = ['body']
+class Project(db.Model):
+    __searchable__ = ['client']
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    date = db.Column(db.String(40))  # db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    client = db.Column(db.String(40))
+    city = db.Column(db.String(40))
+    location = db.Column(db.String(100))
+    platform = db.Column(db.String(40))
+    income = db.Column(db.Float(40))
+    cost = db.Column(db.Float(40))
+    comment = db.Column(db.String(150))
 
     def __repr__(self):
-        return '<Project {}>'.format(self.body)
-
-
-class Prediction(SearchableMixin, db.Model):
-    __searchable__ = ['prediction_text']
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Project {}>'.format(self.body)
+        return f'<Project for {self.client} on {self.date}.>'
