@@ -20,6 +20,7 @@ The application is available at [flavia-dashboard-ml.herokuapp.com]( https://fla
 <br />
 
 ## How to use it
+Flavia
 
 ```bash
 $ # Get the code
