@@ -1,7 +1,7 @@
 # Welcome to the Machine Learning Dashboard!
 
 A end to end project from data collection to putting a machine learning model into production.
-The application is available at [flavia-dashboard-ml.herokuapp.com]( https://flavia-dashboard.herokuapp.com).
+The application is available at [flavia-dashboard.herokuapp.com]( https://flavia-dashboard.herokuapp.com).
 
 ![Home Page](app/static/assets/img/theme/home.PNG)
 
@@ -20,7 +20,6 @@ The application is available at [flavia-dashboard-ml.herokuapp.com]( https://fla
 <br />
 
 ## How to use it
-Flavia
 
 ```bash
 $ # Get the code
